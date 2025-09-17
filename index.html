@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>途羚公寓预约</title>
+  <title>途羚公寓住户反馈</title>
   <style>
     * {
       margin: 0;
@@ -11,6 +11,7 @@
       box-sizing: border-box;
     }
     body {
+      /* 替换为你的背景图地址（本地/在线均可） */
       background: url("背景图.jpg") no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
@@ -21,26 +22,25 @@
       padding: 15px;
     }
     .logo {
-    width: 150px;
-    height: 150px;
-    background: #fff url("logo.png") no-repeat center center;
-    background-size: contain;
-    margin: 10px 0;
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    /* 添加居中显示 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+      width: 180px;
+      height: auto;
+      margin: 10px 0;
     }
-    .subtitle {
-      color: white;
-      font-size: 20px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-      margin-bottom: 15px;
+    .title-group {
       text-align: center;
+      margin-bottom: 15px;
     }
-    .form-box {
+    .main-title {
+      color: white;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .sub-title {
+      color: white;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+    .form-container {
       width: 100%;
       max-width: 500px;
       background-color: rgba(255, 255, 255, 0.2);
@@ -48,7 +48,7 @@
       padding: 20px;
       backdrop-filter: blur(5px);
     }
-    input {
+    select, textarea {
       width: 100%;
       padding: 14px 22px;
       margin: 10px 0;
@@ -58,8 +58,20 @@
       background-color: rgba(255, 255, 255, 0.9);
       color: #333;
       outline: none;
+      appearance: none; /* 清除下拉框默认箭头 */
     }
-    input::placeholder {
+    /* 自定义下拉框箭头（用SVG实现） */
+    select {
+      background: rgba(255, 255, 255, 0.9) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M6 8L0 2h12z' fill='%23666'/%3E%3C/svg%3E") no-repeat right 20px center;
+      background-size: 12px 8px;
+      padding-right: 40px; /* 给箭头留空间 */
+    }
+    textarea {
+      border-radius: 20px; /* 文本域用圆角，更柔和 */
+      min-height: 120px;
+      resize: none; /* 禁止手动拉伸 */
+    }
+    ::placeholder {
       color: #666;
     }
     .privacy {
@@ -79,7 +91,7 @@
       font-size: 17px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: background-color 0.3s;
       margin-top: 5px;
     }
     .submit-btn:hover {
@@ -105,46 +117,62 @@
   </style>
 </head>
 <body>
-  <!-- Logo区域 - 保持原样 -->
-  <div class="logo.png"></div>
+  <!-- Logo区域 -->
+  <img src="logo.png" alt="途羚公寓Logo" class="logo">
   
-  <!-- 标题区域 - 保持原样 -->
-  <div class="subtitle">预约信息登记</div>
+  <!-- 标题区域 -->
+  <div class="title-group">
+    <h1 class="main-title">公寓住户反馈</h1>
+    <p class="sub-title">请留下您的宝贵意见</p>
+  </div>
   
   <!-- 表单区域 -->
-  <div class="form-box">
-    <form id="reservation-form" action="https://formspree.io/f/xblavkgd" method="POST">
-      <input type="text" name="经办人" placeholder="经办人" required>
-      <input type="tel" name="联系电话" placeholder="联系电话" required>
-      <input type="text" name="公司名称" placeholder="您的公司名称">
-      <input type="text" name="城市" placeholder="您需要入住的城市" required>
-      <input type="number" name="入住人数" placeholder="入住人数" required min="1">
+  <div class="form-container">
+    <form id="feedback-form" action="https://formspree.io/f/xkgvlzba" method="POST">
+      <!-- 反馈门店（仅2个选项） -->
+      <select name="反馈门店" required>
+        <option value="" disabled selected>反馈门店(例:上海XX门店)</option>
+        <option value="上海XX店">上海XX店</option>
+        <option value="广州XX店">广州XX店</option>
+      </select>
+      
+      <!-- 遇到的问题 -->
+      <select name="遇到的问题" required>
+        <option value="" disabled selected>遇到的问题</option>
+        <option value="卫生">卫生</option>
+        <option value="设备">设备</option>
+        <option value="服务">服务</option>
+      </select>
+      
+      <!-- 详细描述 -->
+      <textarea name="问题描述" placeholder="请详细描述您的问题" required></textarea>
       
       <div class="privacy">
         <strong>隐私承诺</strong><br>
-        您的信息仅用于服务对接，我们严格保密
+        您的信息仅用于服务优化，我们严格保密
       </div>
       
       <button type="submit" class="submit-btn">提交</button>
     </form>
-    <div class="success-tip" id="successTip">提交成功，我们会尽快与您联系～</div>
+    <div class="success-tip" id="successTip">提交成功，感谢您的反馈～</div>
   </div>
 
   <div class="footer">
-
+    衷心感谢您为【途羚公寓】提供的宝贵意见与专业建议!
   </div>
 
   <script>
-    const form = document.getElementById('reservation-form');
+    const form = document.getElementById('feedback-form');
     const successTip = document.getElementById('successTip');
 
     form.addEventListener('submit', async function(e) {
-      e.preventDefault();
+      e.preventDefault(); // 阻止默认提交跳转
       
       const formspreeUrl = form.action;
       const formData = new FormData(form);
       
       try {
+        // 提交数据到Formspree
         const response = await fetch(formspreeUrl, {
           method: 'POST',
           body: formData,
@@ -154,14 +182,15 @@
         });
         
         if (response.ok) {
+          // 提交成功：隐藏表单，显示提示
           form.style.display = 'none';
           successTip.style.display = 'block';
         } else {
-          alert('提交失败，请稍后重试或直接联系我们');
+          alert('提交失败，请稍后重试');
         }
       } catch (error) {
         console.error('提交异常:', error);
-        alert('网络错误，请检查网络连接后重试');
+        alert('网络错误，请检查网络连接');
       }
     });
   </script>
